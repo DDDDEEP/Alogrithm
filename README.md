@@ -8,6 +8,11 @@ https://www.nowcoder.com/ta/coding-interviews
 
 ### leetcode
 
+### 常见题
+
+1. [获取两个日期之间的天数](./常见笔试题/1-Date.md)
+
+
 ### 杂项
 
 1. [以中位数作为栅栏值的快速选择](./杂项/1-SELECT.md)
