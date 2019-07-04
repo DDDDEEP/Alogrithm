@@ -10,7 +10,8 @@ https://www.nowcoder.com/ta/coding-interviews
 
 ### 常见题
 
-1. [获取两个日期之间的天数](./常见笔试题/1-Date.md)
+1. [获取两个日期之间的天数](./常见题/1-Date.md)
+2. [LRU](./常见题/2-LRU.md)
 
 
 ### 杂项
