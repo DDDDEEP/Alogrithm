@@ -238,7 +238,11 @@ KMP 算法在处理多种字符串模板的匹配时效率较低，因为它在�
 
 ## 代码实现
 
-下面是我 ~~xjb~~ 增加可读性的 SA 类代码：
+Manber 和 Myers 的实现版本在字符串后增加了结尾的 $，我没有这么做，稍微魔改了一下，结果出事了
+
+在处理 "aaaaaaaaaa" 这样的用例时候，我一开始的实现里 rank2 会直接取 rank1 或取 0，但因为 rank1 的值可能是 0，没有与取 0 的情况区别开来而导致出 bug，实现的时候需留意一下
+
+嗯，总之，下面是我 ~~xjb~~ 增加可读性的 SA 类代码
 
 ```cpp
 #include <string>
@@ -250,6 +254,8 @@ class SA
 public:
     SA(const string &theStr) : str(theStr), sa(str.size()), rank(str.size()), height(str.size())
     {
+        if (str.size() == 0)
+            return;
         initSA();
         initHeight();
     }
@@ -273,6 +279,8 @@ public:
     }
     string getLCU()
     {
+        if (str.size() == 0)
+            return "";
         int maxHeight = 0, index = 0;
         for (int i = 1; i < height.size(); ++i)
         {
@@ -310,7 +318,7 @@ public:
 private:
     void initSA()
     {
-        vector<int> cnt(max(CHAR_COUNT, static_cast<int>(str.size())), 0),
+        vector<int> cnt(max(CHAR_COUNT, static_cast<int>(str.size() + 1)), 0),
             rank1(str.size(), 0),
             rank2(str.size(), 0),
             tmpSA(str.size(), 0);
@@ -330,18 +338,19 @@ private:
             // 下面讲解第一次迭代的过程：
 
             // 获取(rank1, rank2)，即对应下标的后缀中，(0~k的字符串排名, k~2k的字符串排名)
+            // 注意rank2加了一个1，使来自rank1的值与0区别开来
             for (int i = 0; i < str.size(); ++i)
                 rank1[i] = rank[i];
             for (int i = 0; i < str.size(); ++i)
-                rank2[i] = ((i + k) < str.size() ? rank1[i + k] : 0);
+                rank2[i] = ((i + k) < str.size() ? rank1[i + k] + 1 : 0);
             // rank1: 55755557
             // rank2: 57555570
 
             // 对rank2排序得到一个tmpSA
             cnt.assign(cnt.size(), 0);
             for (int i = 0; i < str.size(); ++i)
-                cnt[rank2[i]]++;
-            for (int i = 1; i < str.size(); ++i)
+                ++cnt[rank2[i]];
+            for (int i = 1; i < str.size() + 1; ++i) // 这里加了一个1
                 cnt[i] += cnt[i - 1];
             for (int i = str.size() - 1; i >= 0; --i)
                 tmpSA[--cnt[rank2[i]]] = i;
@@ -357,7 +366,7 @@ private:
             // sa: [ ][ ][ ][ ][ ][6][ ][ ]，--cnt[5]==5，如此类推
             cnt.assign(cnt.size(), 0);
             for (int i = 0; i < str.size(); ++i)
-                cnt[rank1[i]]++;
+                ++cnt[rank1[i]];
             for (int i = 1; i < str.size(); ++i)
                 cnt[i] += cnt[i - 1];
             // cnt: ...6...8...
@@ -415,7 +424,7 @@ private:
 };
 int main()
 {
-    SA sa("aabaaaab");
+    SA sa("");
     sa.print();
 }
 // sa[0]:3(aaaab)
@@ -445,14 +454,6 @@ int main()
 // height[6]:0()
 // height[7]:1(b)
 ```
-
-问题的解答如下：
-
-```cpp
-
-```
-
-
 
 
 
