@@ -455,5 +455,5 @@ int main()
 // height[7]:1(b)
 ```
 
-
+好复杂啊，稍微简单的做法可见 [Rabin-Karp](./5-Rabin-Karp.md)
 

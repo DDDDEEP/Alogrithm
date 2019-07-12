@@ -8,14 +8,11 @@ https://www.nowcoder.com/ta/coding-interviews
 
 ### leetcode
 
-### 常见题
-
-1. [获取两个日期之间的天数](./常见题/1-Date.md)
-2. [LRU](./常见题/2-LRU.md)
-3. [最长重复子串](./常见题/3-SA.md)
-4. [KMP](./常见题/4-KMP.md)
-
-
 ### 杂项
 
-1. [以中位数作为栅栏值的快速选择](./杂项/1-SELECT.md)
+1. [获取两个日期之间的天数](./杂项/1-Date.md)
+2. [LRU](./杂项/2-LRU.md)
+3. [最长重复子串](./杂项/3-SA.md)
+4. [KMP](./杂项/4-KMP.md)
+5. [Rabin-Karp](./杂项/5-Rabin-Karp.md)
+6. [以中位数作为栅栏值的快速选择](./杂项/6-SELECT.md)
