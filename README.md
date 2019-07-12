@@ -10,7 +10,7 @@ https://www.nowcoder.com/ta/coding-interviews
 
 ### 杂项
 
-1. [获取两个日期之间的天数](./杂项/1-Date.md)
+1. [获取两个日期之间的天数](./杂项/1-DATE.md)
 2. [LRU](./杂项/2-LRU.md)
 3. [最长重复子串](./杂项/3-SA.md)
 4. [KMP](./杂项/4-KMP.md)
