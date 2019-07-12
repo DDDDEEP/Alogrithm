@@ -50,12 +50,67 @@ index:          3         i
      A A   A A
       ?        B
     如果 ? 处的字符和 i-1 处的字符相同，那么我们就可以继承 A 这个小公共前后缀啦
+    这个过程其实就是步骤 2，也就是说步骤 2 和 3 构成一个循环
 
-4. k == -1,break
-    边界条件，不详述啦
+4. k == -1, break
+    边界条件，不详述了
 ```
 
-将上面相当意识流的解释写成简洁的代码，就是这个样子：
+对于 next 数组的使用过程，记住搜索串的下标是单调递增的
+
+而当模板串对应下标的字符等于搜索串下标的字符，或模板串下标在开始位置，两个下标才会递增；
+
+否则，模板串下标取 next 数组的对应值
+
+将上面相当意识流的解释写成代码，就是这个样子：
+
+```cpp
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if (needle.size() == 0)
+            return 0;
+        // 创建next数组
+        vector<int> next(needle.size(), 0);
+        next[0] = -1;
+        int k;
+        for (int i = 1, k = 0; i < needle.size(); ++i)
+        {
+            k = next[i - 1];
+            while (k != -1 && needle[k] != needle[i - 1])
+            {
+                k = next[k];
+            }
+            next[i] = k + 1;
+        }
+
+        int hayIndex = 0, needIndex = 0, res = -1;
+        while (hayIndex < haystack.size())
+        {
+            if (needIndex == -1 || haystack[hayIndex] == needle[needIndex])
+            {
+                ++hayIndex;
+                ++needIndex;
+            }
+            else
+            {
+                needIndex = next[needIndex];
+            }
+
+            if (needIndex == needle.size())
+            {
+                res = hayIndex - needle.size();
+                break;
+            }
+        }
+        return res;
+
+    }
+};
+
+```
 
 
 
