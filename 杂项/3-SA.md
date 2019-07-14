@@ -295,7 +295,7 @@ public:
     int find(const string& pattern)
     {
         // 二分查找
-        int l = 0, r = sa.size(), mid, cmp;
+        int l = 0, r = sa.size() - 1, mid, cmp;
         while (r - l > 1)
         {
             mid = (l + r) / 2;
