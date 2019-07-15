@@ -274,7 +274,7 @@ public:
         for (int i = 0; i < height.size(); ++i)
         {
             printf("height[%d]:%d(%s)\n", i, height[i],
-                i == 0 ? "" : str.substr(sa[i], height[i]).c_str());
+                   i == 0 ? "" : str.substr(sa[i], height[i]).c_str());
         }
     }
     string getLCU()
@@ -292,29 +292,35 @@ public:
         }
         return str.substr(sa[index], maxHeight);
     }
-    int find(const string& pattern)
+    int find(const string &pattern)
     {
         // 二分查找
         int l = 0, r = sa.size() - 1, mid, cmp;
-        while (r - l > 1)
+        int bigIndex = -1;
+        while (l <= r)
         {
-            mid = (l + r) / 2;
-            if (str.substr(sa[mid], pattern.size()) > pattern)
+            mid = l + (r - l) / 2;
+            string tmpStr = str.substr(sa[mid], pattern.size());
+            if (pattern < tmpStr)
             {
-                r = mid;
+                r = mid - 1;
+            }
+            else if (pattern > tmpStr)
+            {
+                l = mid + 1;
             }
             else
             {
-                l = mid;
+                if (bigIndex < mid)
+                    bigIndex = mid;
+                else
+                    break;
+                r = mid - 1;
             }
         }
-        if (str.substr(sa[r], pattern.size()) == pattern)
-            return sa[r];
-        else if (str.substr(sa[l], pattern.size()) == pattern)
-            return sa[l];
-        else
-            return -1;
+        return bigIndex == str.size() ? -1 : sa[bigIndex];
     }
+
 private:
     void initSA()
     {
@@ -405,9 +411,7 @@ private:
                 if (k > 0)
                     --k;
                 int j = sa[rank[i] - 1];
-                while (i + k < str.size()
-                    && j + k < str.size()
-                    && str[i + k] == str[j + k])
+                while (i + k < str.size() && j + k < str.size() && str[i + k] == str[j + k])
                 {
                     ++k;
                 }
@@ -424,7 +428,7 @@ private:
 };
 int main()
 {
-    SA sa("");
+    SA sa("aabaaaab");
     sa.print();
 }
 // sa[0]:3(aaaab)
