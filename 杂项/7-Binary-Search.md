@@ -45,7 +45,7 @@ int BinarySearch(const vector<int> &arr, int key)
         else
             l = mid + 1;
     }
-    return arr[r + 1] == key ? r + 1 : -1;
+    return (r + 1 < arr.size() && key < arr[r + 1]) ? r + 1 : -1;
 }
 
 int main()
@@ -75,8 +75,8 @@ int BinarySearch(const vector<int> &arr, int key)
         else
             l = mid + 1;
     }
-    // return key <= arr[r + 1] ? r + 1 : -1;
-    return key < arr[r + 1] ? r + 1 : -1;
+    // return (r + 1 < arr.size() && key <= arr[r + 1]) ? r + 1 : -1;
+    return (r + 1 < arr.size() && key < arr[r + 1]) ? r + 1 : -1;
 }
 
 int main()
